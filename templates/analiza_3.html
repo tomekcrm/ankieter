@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Analiza 3 - Oceny Nauczycieli</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1, h2 {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('upload_file') }}">Prześlij plik</a></li>
+            <li><a href="{{ url_for('view_data') }}">Zobacz dane</a></li>
+            <li><a href="{{ url_for('analiza2') }}">Analiza 2</a></li>
+            <li><a href="{{ url_for('analiza3') }}">Analiza 3</a></li>
+        </ul>
+    </nav>
+    
+    <h1>Analiza 3 - Oceny Nauczycieli Prowadzących Zajęcia Dydaktyczne</h1>
+    
+    <p>
+        Uwzględniono wyłącznie nauczycieli zatrudnionych w jednostkach organizacyjnych Wydziału Nauk Społecznych. Oceny nauczycieli z innych wydziałów zostały uwzględnione w sprawozdaniu wydziału zgodnie z ich miejscem zatrudnienia.
+    </p>
+    
+    <p>
+        {{ opis }}
+    </p>
+    
+    <ol>
+        {% for instytut in instytuty %}
+            <li>
+                {{ instytut }} - 
+                {{ instytut_percentages[instytut]['srednie_2_3'] }}% nauczycieli uzyskało ocenę średnią 2,0 - 3,0, 
+                {{ instytut_percentages[instytut]['srednie_3_4'] }}% ocenę średnią 3,0 - 4,0, 
+                {{ instytut_percentages[instytut]['srednie_4_5'] }}% ocenę średnią 4,0 - 5,0 oraz 
+                {{ instytut_percentages[instytut]['srednie_5'] }}% ocenę średnią 5,0.
+            </li>
+        {% endfor %}
+    </ol>
+    
+    <p>
+        Średnia ocena nauczycieli akademickich Wydziału Nauk Społecznych wyniosła <strong>{{ average_rating_wydzial }}</strong>. Natomiast średnia ocena nauczycieli spoza Wydziału Nauk Społecznych prowadzących zajęcia na kierunkach studiów realizowanych przez Wydział Nauk Społecznych wyniosła <strong>{{ average_rating_outside }}</strong>.
+    </p>
+    
+    <p>
+        Reasumując, ocena średnia nauczycieli prowadzących zajęcia na kierunkach studiów realizowanych przez Wydział Nauk Społecznych kształtuje się na poziomie <strong>{{ overall_average_rating }}</strong>.
+    </p>
+    
+    <h2>Tabela 3.1. Uśrednione oceny nauczycieli Wydziału Nauk Społecznych</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Lp.</th>
+                <th>Instytut</th>
+                <th>Nazwisko i Imię</th>
+                <th>Liczba wypełnionych ankiet</th>
+                <th>Liczba uprawnionych</th>
+                <th>Liczba wypełnionych ankiet w %</th>
+                <th>Ocena średnia</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tabela31 %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ row.instytut }}</td>
+                <td>{{ row.nazwisko_imie }}</td>
+                <td>{{ row.liczba_ankiet }}</td>
+                <td>{{ row.liczba_uprawnionych }}</td>
+                <td>{{ row.procent_ankiet }}%</td>
+                <td>{{ row.srednia_ocena }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h2>Tabela 3.2. Uśrednione oceny nauczycieli Wydziału Nauk Społecznych</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Lp.</th>
+                <th>Nazwisko i Imię</th>
+                <th>Ocena średnia</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tabela32 %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ row.nazwisko_imie }}</td>
+                <td>{{ row.srednia_ocena }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h2>Tabela 3.3. Uśrednione oceny nauczycieli spoza Wydziału Nauk Społecznych</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Lp.</th>
+                <th>Nazwisko i Imię</th>
+                <th>Jednostka</th>
+                <th>Liczba wypełnionych ankiet</th>
+                <th>Liczba uprawnionych</th>
+                <th>Liczba wypełnionych ankiet w %</th>
+                <th>Ocena średnia</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tabela33 %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ row.nazwisko_imie }}</td>
+                <td>{{ row.jednostka }}</td>
+                <td>{{ row.liczba_ankiet }}</td>
+                <td>{{ row.liczba_uprawnionych }}</td>
+                <td>{{ row.procent_ankiet }}%</td>
+                <td>{{ row.srednia_ocena }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <p>
+        Zgodnie z Zarządzeniem Rektora UPH w Siedlcach nr 141/2021 z dnia 25 listopada 2021, paragraf 8 pkt 2., gdy dany przedmiot został oceniony przez &lt;25% uprawnionych w miejsce średniej należy wstawić znak „-”. 
+        Jeśli w tabeli zostanie użyty znak „-” – pod tabelą zamieścić adnotację:
+        „-” – przedmiot oceniony przez mniej niż 25% ogółu uprawnionych studentów.
+    </p>
+    <p>
+        Zgodnie z Zarządzeniem Rektora Nr 141/2021 w obliczeniach wyników średnich nie uwzględnia się odpowiedzi na następujące pytania:
+        <ol>
+            <li>Czy stopień trudności ocenianych ćwiczeń, w porównaniu z innymi, był duży? (dla zajęć laboratoryjnych i ćwiczeniowych),</li>
+            <li>Oceń własną frekwencję na wykładach (dla wykładów).</li>
+        </ol>
+    </p>
+    <p>
+        ***Nazwiska i imiona w jednej kolumnie, bez tytułów i stopni naukowych.
+    </p>
+    
+</body>
+</html>

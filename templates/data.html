@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Analiza Wyników{% endblock %}
+{% block content %}
+
+
+
+    <h1>Zagregowane dane z przesłanych plików</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cykl dydaktyczny</th>
+                <th>Kod przedmiotu</th>
+                <th>Nazwa przedmiotu</th>
+                <th>Język prowadzenia</th>
+                <th>ID zajęć</th>
+                <th>Kod zajęć</th>
+                <th>Opis zajęć</th>
+                <th>Nr grupy</th>
+                <th>ID osoby</th>
+                <th>Tytuł</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Kod jednostki</th>
+                <th>Jednostka</th>
+                <th>ID pytania</th>
+                <th>Kolejność</th>
+                <th>Treść pytania</th>
+                <th>Wartość</th>
+                <th>Opis odpowiedzi (PL)</th>
+                <th>Opis odpowiedzi (EN)</th>
+                <th>Odp na wartość</th>
+                <th>Odp na pytanie</th>
+                <th>Udział wart w pytaniu</th>
+                <th>Uprawnieni</th>
+                <th>Udział wartości w uprawnionych</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in data_entries %}
+            <tr>
+                <td>{{ entry.id }}</td>
+                <td>{{ entry.cykl_dydaktyczny }}</td>
+                <td>{{ entry.kod_przedmiotu }}</td>
+                <td>{{ entry.nazwa_przedmiotu }}</td>
+                <td>{{ entry.jezyk_prowadzenia_przedmiotu }}</td>
+                <td>{{ entry.id_zajec }}</td>
+                <td>{{ entry.kod_zajec }}</td>
+                <td>{{ entry.opis_zajec }}</td>
+                <td>{{ entry.nr_grupy }}</td>
+                <td>{{ entry.id_osoby }}</td>
+                <td>{{ entry.tytul }}</td>
+                <td>{{ entry.imie }}</td>
+                <td>{{ entry.nazwisko }}</td>
+                <td>{{ entry.kod_jednostki }}</td>
+                <td>{{ entry.jednostka }}</td>
+                <td>{{ entry.id_pytania }}</td>
+                <td>{{ entry.kolejnosc }}</td>
+                <td>{{ entry.tresc_pytania }}</td>
+                <td>{{ entry.wartosc }}</td>
+                <td>{{ entry.opis_odpowiedzi_pl }}</td>
+                <td>{{ entry.opis_odpowiedzi_en }}</td>
+                <td>{{ entry.odp_na_wartosc }}</td>
+                <td>{{ entry.odp_na_pytanie }}</td>
+                <td>{{ entry.udzial_wart_w_pytaniu }}</td>
+                <td>{{ entry.uprawnieni }}</td>
+                <td>{{ entry.udzial_wartosci_w_uprawnionych }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

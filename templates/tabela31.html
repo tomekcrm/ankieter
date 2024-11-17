@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Tabela 3.1{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Tabela 3.1. Uśrednione oceny nauczycieli Wydziału Nauk Społecznych</h1>
+    <p>(w kolejności alfabetycznej) prowadzących zajęcia dydaktyczne w semestrze zimowym roku akademickiego 2023/2024</p>
+    <p><small>* Oceny średnie wyznaczone zgodnie z metodologią określoną w Zarządzeniu Rektora UPH w Siedlcach nr 141/2021</small></p>
+
+    <!-- Przycisk do kopiowania tabeli -->
+    <button class="btn btn-primary mb-3" onclick="copyTable()">Kopiuj tabelę</button>
+
+    <div class="table-responsive">
+        <table id="tabela31" class="table table-bordered table-hover" style="width: 600px; color: black; border: 0.5px solid black; table-layout: fixed; margin: 0 auto;">
+            <thead class="table-dark">
+                <tr>
+                    <th style="width: 5%;">Lp.</th>
+                    <th style="width: 40%;">Nazwisko i Imię</th>
+                    <th style="width: 25%;">Liczba wypełnionych ankiet / Liczba uprawnionych</th>
+                    <th style="width: 15%;">Liczba wypełnionych ankiet w %</th>
+                    <th style="width: 15%;">Ocena średnia</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in tabela_dane %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ row.nauczyciel }}</td>
+                    <td>{{ row.liczba_ankiet }} / {{ row.liczba_uprawnionych }}</td>
+                    <td>{{ row.procent_wypelnionych }}%</td>
+                    <td>{{ row.srednia_ocena }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p class="mt-3"><em>„-” – przedmiot oceniony przez mniej niż 25% ogółu uprawnionych studentów.</em></p>
+</div>
+
+<!-- Skrypt do kopiowania tabeli -->
+<script>
+    function copyTable() {
+        var table = document.getElementById("tabela31");
+        var range = document.createRange();
+        range.selectNode(table);
+        window.getSelection().addRange(range);
+        try {
+            var successful = document.execCommand('copy');
+            if (successful) {
+                alert("Tabela została skopiowana do schowka! Możesz ją teraz wkleić do dokumentu Word.");
+            } else {
+                alert("Nie udało się skopiować tabeli. Spróbuj ponownie.");
+            }
+        } catch (err) {
+            alert("Wystąpił błąd podczas kopiowania tabeli: " + err);
+        }
+        window.getSelection().removeAllRanges();
+    }
+</script>
+{% endblock %}

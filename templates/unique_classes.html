@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Szczegóły unikalnych zajęć wykładowców{% endblock %}
+{% block content %}
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Szczegóły unikalnych zajęć wykładowców</h1>
+
+        <!-- Przycisk do kopiowania tabeli -->
+        <button class="btn btn-primary mb-3" onclick="copyTable()">Kopiuj tabelę</button>
+
+        <div class="table-responsive">
+            <table id="uniqueClassesTable" class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Nauczyciel</th>
+                        <th>Lista zajęć</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in tabela_details %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ row.nauczyciel }}</td>
+                        <td>
+                            <ul>
+                                {% for zajecie in row.zajecia %}
+                                <li>
+                                    ID zajęć: {{ zajecie.id_zajec }} (Uprawnieni: {{ zajecie.uprawnieni }})<br>
+                                    <strong>Ilość odpowiedzi:</strong> {{ zajecie.ilosc_odpowiedzi }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <strong>Suma uprawnionych:</strong> 
+                            {{ row.zajecia | sum(attribute='uprawnieni') }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Skrypt do kopiowania tabeli -->
+    <script>
+        function copyTable() {
+            var table = document.getElementById("uniqueClassesTable");
+            var text = "";
+            for (var i = 0, row; row = table.rows[i]; i++) {
+                var rowData = [];
+                for (var j = 0, col; col = row.cells[j]; j++) {
+                    if (j === 2) {
+                        // Zamiana listy na tekst
+                        var ul = col.querySelector('ul');
+                        if (ul) {
+                            var listItems = ul.querySelectorAll('li');
+                            var itemsText = [];
+                            listItems.forEach(function(li) {
+                                itemsText.push(li.innerText.replace(/\n/g, ' '));
+                            });
+                            rowData.push(itemsText.join('; '));
+                        } else {
+                            rowData.push(col.innerText);
+                        }
+                    } else {
+                        rowData.push(col.innerText);
+                    }
+                }
+                text += rowData.join("\t") + "\n"; // Tabulator jako separator
+            }
+
+            var textarea = document.createElement("textarea");
+            textarea.style.position = "fixed";
+            textarea.style.left = "-9999px";
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            textarea.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+            alert("Tabela została skopiowana jako tekst do schowka!");
+        }
+    </script>
+
+{% endblock %}

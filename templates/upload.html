@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Prześlij plik CSV{% endblock %}
+{% block content %}
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Prześlij plik CSV</h1>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert alert-info" role="alert">
+                {% for message in messages %}
+                  <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="file" class="form-label">Wybierz plik CSV:</label>
+                <input type="file" class="form-control" id="file" name="file" accept=".csv" required>
+                <div class="invalid-feedback">
+                    Proszę wybrać plik CSV.
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Prześlij</button>
+        </form>
+
+        <div class="mt-4">
+            <!-- Przycisk do usuwania plików i danych z bazy -->
+            <form method="POST" action="{{ url_for('clear_data') }}" class="d-inline">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć wszystkie pliki i dane w bazie?')">
+                    Usuń wszystkie pliki i dane
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Skrypt do obsługi walidacji formularza -->
+    <script>
+        // Przykładowa walidacja Bootstrap
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+
+{% endblock %}

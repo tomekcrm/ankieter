@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Tabela 2.1{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Tabela 2.1</h1>
+
+        <!-- Przycisk do kopiowania tabeli -->
+        <button class="btn btn-primary mb-3" onclick="copyTable()">Kopiuj tabelę</button>
+
+        <div class="table-responsive">
+            <table id="tabela21" class="table table-bordered table-hover" style="width: 600px; color: black; border: 0.5px solid black; table-layout: fixed; margin: 0 auto;">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 5%;">Lp.</th>
+                        <th style="width: 35%;">Nazwa przedmiotu</th>
+                        <th style="width: 15%;">Liczba ankiet</th>
+                        <th style="width: 15%;">Liczba uprawnionych</th>
+                        <th style="width: 15%;">Procent ankiet</th>
+                        <th style="width: 15%;">Ocena średnia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in tabela21 %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ row.nazwa_przedmiotu }}</td>
+                        <td>{{ row.liczba_ankiet }}</td>
+                        <td>{{ row.liczba_uprawnionych }}</td>
+                        <td>{{ row.procent_ankiet }}%</td>
+                        <td>{{ row.srednia_ocena }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Skrypt do kopiowania tabeli -->
+    <script>
+        function copyTable() {
+            var table = document.getElementById("tabela21");
+            var range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().addRange(range);
+            try {
+                var successful = document.execCommand('copy');
+                if (successful) {
+                    alert("Tabela została skopiowana do schowka! Możesz ją teraz wkleić do dokumentu Word.");
+                } else {
+                    alert("Nie udało się skopiować tabeli. Spróbuj ponownie.");
+                }
+            } catch (err) {
+                alert("Wystąpił błąd podczas kopiowania tabeli: " + err);
+            }
+            window.getSelection().removeAllRanges();
+        }
+    </script>
+{% endblock %}

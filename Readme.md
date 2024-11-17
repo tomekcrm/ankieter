@@ -171,3 +171,7 @@ System jest skalowalny i elastyczny, co umożliwia jego dostosowanie do potrzeb 
 
 W razie pytań lub sugestii dotyczących rozwoju systemu, prosimy o kontakt z zespołem.
 
+Wzór inline: <img src="https://rawgit.com/in	git@github.com:tomekcrm/ankieter/master/svgs/4a350954d54a4b6ed55ae926598470e4.svg?invert_in_darkmode" align=middle width=63.09925874999999pt height=26.76175259999998pt/>
+
+Wzór blokowy:
+<p align="center"><img src="https://rawgit.com/in	git@github.com:tomekcrm/ankieter/master/svgs/7453210bfafd237a3d1289f3cc12d0b4.svg?invert_in_darkmode" align=middle width=63.09925874999999pt height=14.202794099999998pt/></p>

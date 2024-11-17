@@ -1,6 +1,6 @@
 # Dokumentacja Techniczna Systemu Analizy Wyników Ankiet
 
-> **Uwaga:** Klucze używane w systemie **nie są usuwane**, co ułatwia korzystanie nauczycielom. Obecnie system **nie jest nigdzie hostowany**. Jeśli ktokolwiek chciałby go uruchomić na serwerze, zaleca się zmianę wszystkich kluczy oraz dodanie odpowiednich środków bezpieczeństwa.
+> **Uwaga:** Klucze używane w systemie **nie są usuwane**, baza danych jest **czysta**, co ułatwia korzystanie nauczycielom. Obecnie system **nie jest nigdzie hostowany**. Jeśli ktokolwiek chciałby go uruchomić na serwerze, zaleca się zmianę wszystkich kluczy oraz dodanie odpowiednich środków bezpieczeństwa.
 
 ## Spis Treści
 1. Wprowadzenie
